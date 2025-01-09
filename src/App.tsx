@@ -1,11 +1,5 @@
-import { Button } from "./components/ui/button";
-
 function App() {
-  return (
-    <div>
-      <Button>Hello</Button>
-    </div>
-  );
+  return <div>Welcome to The CMS</div>;
 }
 
 export default App;
