@@ -10,6 +10,7 @@ const Home = () => {
         Home
         <div>
           <Button onClick={() => navigate("/items")}> to Items</Button>
+          <Button onClick={() => navigate("/add-item")}> Add Item</Button>
         </div>
       </h3>
     </main>

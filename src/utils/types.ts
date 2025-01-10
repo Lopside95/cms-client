@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const item = z.object({
-  id: z.string(),
+  id: z.number(),
   name: z.string(),
   quantity: z.number(),
   createdAt: z.date(),

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ItemSchema } from "./schemas";
+import { Item } from "./types";
 
 export const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -21,4 +22,13 @@ const createItem = async (data: ItemSchema) => {
   }
 };
 
-export { fetchItems, createItem };
+const updateItem = async (data: Item) => {
+  try {
+    const res = await axios.put(`${baseUrl}/items`, data);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { fetchItems, createItem, updateItem };
