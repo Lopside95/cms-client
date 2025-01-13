@@ -13,6 +13,15 @@ const fetchItems = async () => {
   }
 };
 
+const fetchItemById = async (id: number) => {
+  try {
+    const res = await axios.get(`${baseUrl}/items/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const createItem = async (data: ItemSchema) => {
   try {
     const res = await axios.post(`${baseUrl}/items`, data);
@@ -22,13 +31,13 @@ const createItem = async (data: ItemSchema) => {
   }
 };
 
-const updateItem = async (data: Item) => {
+const updateItem = async (data: ItemSchema) => {
   try {
-    const res = await axios.put(`${baseUrl}/items`, data);
+    const res = await axios.put(`${baseUrl}/items/${data.id}`, data);
     return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-export { fetchItems, createItem, updateItem };
+export { fetchItems, createItem, updateItem, fetchItemById };
