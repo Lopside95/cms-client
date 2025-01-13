@@ -81,7 +81,7 @@ const UpdateItem = () => {
         <main className="flex flex-col gap-4">
           <h3>Items</h3>
           <ItemCard item={item} />
-          <TextField name="itemName" label="Name" />
+          <TextField name="itemName" label="Item Name" />
           <NumberField name="quantity" label="Quantity" />
           <Input type="hidden" name="id" defaultValue={item.id} />
           <Button type="submit">Submit</Button>
