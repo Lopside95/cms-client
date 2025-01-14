@@ -25,7 +25,7 @@ const AddItem = () => {
   const form = useForm<ItemSchema>({
     resolver: zodResolver(itemSchema),
     defaultValues: {
-      name: "",
+      itemName: "",
       quantity: 0,
     },
   });
@@ -44,7 +44,22 @@ const AddItem = () => {
   //     console.error(error);
   //   }
   // };
+
+  const vals = form.watch();
+
+  console.log("vals", vals);
+
+  const errors = form.formState.errors;
+
+  console.log("errors", errors);
+
+  useEffect(() => {
+    console.log("form errors", errors);
+  }, [vals]);
+
   const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
+    console.log("data", data);
+
     try {
       await createItem(data);
     } catch (error) {
@@ -71,7 +86,8 @@ const AddItem = () => {
           className="flex flex-col gap-10 w-1/2"
         >
           <section>
-            <TextField name="name" label="Name" />
+            {/* <TextField name="itemName" label="Name" /> */}
+            <TextField name="itemName" label="Item Name" />
             <NumberField name="quantity" label="Quantity" />
           </section>
           <Button type="submit">Add Item</Button>

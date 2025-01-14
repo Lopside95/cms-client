@@ -30,12 +30,8 @@ const UpdateItem = () => {
       itemName: item?.itemName || "",
       quantity: item?.quantity || 0,
       id: item?.id || 0,
-      // id: item?.id,
-      // createdAt: item?.createdAt,
-      // updatedAt: item?.updatedAt,
     },
   });
-  // const id = item?.id;
 
   const fetchData = async () => {
     if (!id) {
@@ -62,6 +58,10 @@ const UpdateItem = () => {
   console.log("watch", watch);
 
   const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
+    if (!data) {
+      console.log("No data");
+    }
+
     try {
       console.log(data);
       const res = await updateItem(data);
@@ -83,7 +83,7 @@ const UpdateItem = () => {
           <ItemCard item={item} />
           <TextField name="itemName" label="Item Name" />
           <NumberField name="quantity" label="Quantity" />
-          <Input type="hidden" name="id" defaultValue={item.id} />
+          {/* <Input type="hidden" name="id" defaultValue={item.id} /> */}
           <Button type="submit">Submit</Button>
         </main>
       </form>
