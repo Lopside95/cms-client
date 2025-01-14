@@ -3,26 +3,27 @@ import NumberField from "@/components/NumberField";
 import TextField from "@/components/TextField";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardContent,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { fetchItemById, fetchItems, updateItem } from "@/utils/api";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { deleteItem, fetchItemById, fetchItems, updateItem } from "@/utils/api";
 import { ItemSchema, itemSchema } from "@/utils/schemas";
 import { Item } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const UpdateItem = () => {
   const [item, setItem] = useState<Item | null>(null);
 
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const form = useForm<ItemSchema>({
     resolver: zodResolver(itemSchema),
@@ -72,22 +73,51 @@ const UpdateItem = () => {
     }
   };
 
+  const handleDelete = async (id: number) => {
+    try {
+      const res = await deleteItem(id);
+
+      if (!res || res.status !== 204) {
+        console.log("Error deleting item");
+      } else {
+        navigate("/items");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (!item) {
     return <div>Loading...</div>;
   }
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <main className="flex flex-col gap-4">
+      <main className="flex flex-col gap-4">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <h3>Items</h3>
           <ItemCard item={item} />
           <TextField name="itemName" label="Item Name" />
           <NumberField name="quantity" label="Quantity" />
           {/* <Input type="hidden" name="id" defaultValue={item.id} /> */}
           <Button type="submit">Submit</Button>
-        </main>
-      </form>
+        </form>
+        <Dialog>
+          <DialogTrigger className="text-white">Delete Item</DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                Are you sure you want to delete this item?
+              </DialogTitle>
+              <DialogDescription>
+                This action is irreversible and the item will be permanently
+                deleted.
+              </DialogDescription>
+            </DialogHeader>
+            <Button onClick={() => handleDelete(item.id)}>Delete Item</Button>
+          </DialogContent>
+        </Dialog>
+      </main>
     </FormProvider>
   );
 };

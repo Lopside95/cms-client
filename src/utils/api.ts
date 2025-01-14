@@ -40,4 +40,13 @@ const updateItem = async (data: ItemSchema) => {
   }
 };
 
-export { fetchItems, createItem, updateItem, fetchItemById };
+const deleteItem = async (id: number) => {
+  try {
+    const res = await axios.delete(`${baseUrl}/items/${id}`);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { fetchItems, createItem, updateItem, fetchItemById, deleteItem };
