@@ -39,8 +39,6 @@ const UpdateItem = () => {
     }
     const res = await fetchItemById(Number(id));
 
-    console.log(res);
-
     setItem(res);
     form.reset({
       itemName: res.itemName,
@@ -53,9 +51,13 @@ const UpdateItem = () => {
     fetchData();
   }, [id]);
 
-  const watch = form.watch();
+  const errors = form.formState.errors;
 
-  console.log("watch", watch);
+  useEffect(() => {
+    if (errors) {
+      console.log("Form Errors", errors);
+    }
+  }, [errors]);
 
   const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
     if (!data) {
@@ -63,7 +65,6 @@ const UpdateItem = () => {
     }
 
     try {
-      console.log(data);
       const res = await updateItem(data);
       return res;
     } catch (error) {
