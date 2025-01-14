@@ -7,7 +7,7 @@ export const baseUrl = import.meta.env.VITE_API_URL;
 const fetchItems = async () => {
   try {
     const res = await axios.get(`${baseUrl}/items`);
-    return res.data;
+    return res;
   } catch (error) {
     console.error(error);
   }
@@ -16,7 +16,7 @@ const fetchItems = async () => {
 const fetchItemById = async (id: number) => {
   try {
     const res = await axios.get(`${baseUrl}/items/${id}`);
-    return res.data;
+    return res;
   } catch (error) {
     console.error(error);
   }
@@ -25,7 +25,7 @@ const fetchItemById = async (id: number) => {
 const createItem = async (data: ItemSchema) => {
   try {
     const res = await axios.post(`${baseUrl}/items`, data);
-    return res.data;
+    return res;
   } catch (error) {
     console.error(error);
   }

@@ -10,11 +10,13 @@ import Items from "./pages/Items";
 import UpdateItem from "./pages/UpdateItem";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      <Toaster />
       <>
         <Routes>
           <Route path="/" element={<Home />} />

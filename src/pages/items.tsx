@@ -22,7 +22,7 @@ const Items = () => {
   const [items, setItems] = useState<Item[] | null>();
   const fetchData = async () => {
     const res = await fetchItems();
-    setItems(res);
+    setItems(res?.data);
   };
 
   const navigate = useNavigate();

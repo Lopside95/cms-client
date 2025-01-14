@@ -39,12 +39,12 @@ const UpdateItem = () => {
       console.log("No id");
     }
     const res = await fetchItemById(Number(id));
-
-    setItem(res);
+    const data = res?.data;
+    setItem(data);
     form.reset({
-      itemName: res.itemName,
-      quantity: res.quantity,
-      id: res.id,
+      itemName: data.itemName,
+      quantity: data.quantity,
+      id: data.id,
     });
   };
 
@@ -76,7 +76,7 @@ const UpdateItem = () => {
   const handleDelete = async (id: number) => {
     try {
       const res = await deleteItem(id);
-
+      console.log("res", res);
       if (!res || res.status !== 204) {
         console.log("Error deleting item");
       } else {
