@@ -1,18 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
-
 const Home = () => {
-  const navigate = useNavigate();
-
   return (
-    <main className="flex flex-col items-center align-middle bg-gray-100">
-      <h3>
-        Home
-        <div>
-          <Button onClick={() => navigate("/items")}> to Items</Button>
-          <Button onClick={() => navigate("/add-item")}> Add Item</Button>
-        </div>
-      </h3>
+    <main className="flex flex-col items-center align-middle ">
+      <h1>Welcome to the CMS</h1>
     </main>
   );
 };

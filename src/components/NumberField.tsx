@@ -23,7 +23,6 @@ const NumberField = ({ name, type, label }: FormInput) => {
             <FormMessage />
             <FormControl>
               <Input
-                {...field}
                 {...register(name, { valueAsNumber: true })}
                 className="w-80"
                 type="number"

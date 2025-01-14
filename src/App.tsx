@@ -5,18 +5,26 @@ import {
   useLocation,
   useNavigate,
 } from "react-router";
-import Home from "./pages/home";
 import AddItem from "./pages/AddItem";
-import Items from "./pages/items";
+import Items from "./pages/Items";
+import UpdateItem from "./pages/UpdateItem";
+import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/add-item" element={<AddItem />} />
-        <Route path="/items" element={<Items />} />
-      </Routes>
+      <Navbar />
+      <Toaster />
+      <>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/add-item" element={<AddItem />} />
+          <Route path="/items" element={<Items />} />
+          <Route path="/items/:id" element={<UpdateItem />} />
+        </Routes>
+      </>
     </BrowserRouter>
   );
 }
