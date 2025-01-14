@@ -7,7 +7,7 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <div className="fixed top-0 w-full p-4 shadow-md flex ">
+    <div className="fixed top-0 bg-slate-500 w-full p-4 shadow-md flex ">
       <Button
         variant={location.pathname === "/" ? "outline" : "default"}
         onClick={() => navigate("/")}

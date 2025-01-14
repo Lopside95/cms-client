@@ -46,8 +46,13 @@ const AddItem = () => {
       if (res?.status === 201) {
         toast({
           title: "Item successfully added to the inventory",
+          duration: 2000,
         });
         form.reset();
+
+        setTimeout(() => {
+          form.setFocus("itemName");
+        }, 1000);
       }
     } catch (error) {
       console.error(error);

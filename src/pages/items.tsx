@@ -31,38 +31,21 @@ const Items = () => {
     fetchData();
   }, []);
 
-  const form = useForm<Item>({
-    resolver: zodResolver(item),
-    defaultValues: {},
-  });
-
-  const onSubmit: SubmitHandler<Item> = async (data: Item) => {
-    try {
-      console.log(data);
-      const res = await updateItem(data);
-      return res;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <main className="flex flex-col gap-4">
-          <h3>Items</h3>
-          {items?.map((item) => (
-            <ItemCard
-              onClick={() => navigate(`/items/${item.id}`)}
-              key={item.id}
-              item={item}
-              inputData={{ name: "name", type: "text", label: "Name" }}
-            />
-          ))}
-          <Button type="submit">Submit</Button>
-        </main>
-      </form>
-    </FormProvider>
+    <main className="">
+      <h1>Items</h1>
+      <section className="flex flex-wrap">
+        {items?.map((item) => (
+          <ItemCard
+            onClick={() => navigate(`/items/${item.id}`)}
+            key={item.id}
+            item={item}
+            inputData={{ name: "name", type: "text", label: "Name" }}
+          />
+        ))}
+      </section>
+      <Button type="submit">Submit</Button>
+    </main>
   );
 };
 
