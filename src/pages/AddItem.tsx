@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input";
-import { createItem, fetchItems, updateItem } from "@/api/items";
 import { Item } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -10,13 +9,13 @@ import { Button } from "@/components/ui/button";
 import NumberField from "@/components/NumberField";
 import ItemCard from "@/components/ItemCard";
 import { useToast } from "@/hooks/use-toast";
-import { create } from "@/utils/helpers";
+import { create, getAll } from "@/utils/api";
 
 const AddItem = () => {
   const [items, setItems] = useState<Item[] | null>(null);
 
   const fetchData = async () => {
-    const res = await fetchItems();
+    const res = await getAll("items");
     setItems(res?.data);
   };
 
@@ -42,7 +41,11 @@ const AddItem = () => {
 
   const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
     try {
-      const res = await createItem(data);
+      const res = await create<ItemSchema>({
+        route: "items",
+        data,
+        id: data.id,
+      });
 
       if (res?.status === 201) {
         toast({
@@ -59,6 +62,26 @@ const AddItem = () => {
       console.error(error);
     }
   };
+
+  // const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
+  //   try {
+  //     const res = await create({ route: "items", data });
+
+  //     if (res?.status === 201) {
+  //       toast({
+  //         title: "Item successfully added to the inventory",
+  //         duration: 2000,
+  //       });
+  //       form.reset();
+
+  //       setTimeout(() => {
+  //         form.setFocus("itemName");
+  //       }, 1000);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <FormProvider {...form}>

@@ -67,7 +67,12 @@ const UpdateItem = () => {
     }
 
     try {
-      const res = await update({ route: "items", data });
+      const res = await update<ItemSchema>({
+        route: "items",
+        data,
+        id: data.id,
+      });
+      // const res = await update({ route: "items", data });
       return res;
     } catch (error) {
       console.error(error);

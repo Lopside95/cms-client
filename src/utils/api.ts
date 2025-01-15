@@ -3,14 +3,26 @@ import { format } from "date-fns";
 import { ZodSchema } from "zod";
 import { AnimalSchema, FoodSchema, ItemSchema, ShelterSchema } from "./schemas";
 
-export interface CreateUpdate {
-  route: string;
-  data: ItemSchema | AnimalSchema | FoodSchema | ShelterSchema;
+export const baseUrl = import.meta.env.VITE_API_URL;
+// export interface CreateUpdate {
+//   route: "items" | "animals" | "foods" | "shelters";
+//   data: ItemSchema | AnimalSchema | FoodSchema | ShelterSchema;
+// }
+
+interface CreateUpdate<T> {
+  id?: number;
+  route: "items" | "animals" | "foods" | "shelters";
+  data: T;
 }
 
-export const baseUrl = import.meta.env.VITE_API_URL;
-
-const formatDate = (date: Date) => format(date, "HH:mm dd.MM.yy");
+const create = async <T>({ route, data }: CreateUpdate<T>) => {
+  try {
+    const res = await axios.post(`${baseUrl}/${route}`, data);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const getAll = async (route: string) => {
   try {
@@ -30,23 +42,32 @@ const getById = async (route: string, id: number) => {
   }
 };
 
-const create = async ({ route, data }: CreateUpdate) => {
+// const create = async ({ route, data }: CreateUpdate) => {
+//   try {
+//     const res = await axios.post(`${baseUrl}/${route}`, data);
+//     return res;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+const update = async <T>({ route, data, id }: CreateUpdate<T>) => {
   try {
-    const res = await axios.post(`${baseUrl}/${route}`, data);
+    const res = await axios.put(`${baseUrl}/${route}/${id}`, data);
     return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-const update = async ({ route, data }: CreateUpdate) => {
-  try {
-    const res = await axios.put(`${baseUrl}/${route}/${data.id}`, data);
-    return res;
-  } catch (error) {
-    console.error(error);
-  }
-};
+// const update = async ({ route, data }: CreateUpdate) => {
+//   try {
+//     const res = await axios.put(`${baseUrl}/${route}/${data.id}`, data);
+//     return res;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 const deleteContent = async (route: string, id: number) => {
   try {
@@ -79,4 +100,4 @@ const deleteContent = async (route: string, id: number) => {
 //   return;
 // };
 
-export { formatDate, getAll, getById, create, update, deleteContent };
+export { getAll, getById, create, update, deleteContent };
