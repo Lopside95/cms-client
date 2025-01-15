@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
-import { createItem, fetchItems, updateItem } from "@/utils/api";
-import { item, Item } from "@/utils/types";
+import { createItem, fetchItems, updateItem } from "@/api/items";
+import { Item } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import NumberField from "@/components/NumberField";
 import ItemCard from "@/components/ItemCard";
 import { useToast } from "@/hooks/use-toast";
+import { create } from "@/utils/helpers";
 
 const AddItem = () => {
   const [items, setItems] = useState<Item[] | null>(null);

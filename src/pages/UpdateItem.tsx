@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { deleteItem, fetchItemById, fetchItems, updateItem } from "@/utils/api";
+import { deleteContent, getById, update } from "@/utils/api";
 import { ItemSchema, itemSchema } from "@/utils/schemas";
 import { Item } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,7 +38,8 @@ const UpdateItem = () => {
     if (!id) {
       console.log("No id");
     }
-    const res = await fetchItemById(Number(id));
+    const res = await getById("items", Number(id));
+
     const data = res?.data;
     setItem(data);
     form.reset({
@@ -66,7 +67,7 @@ const UpdateItem = () => {
     }
 
     try {
-      const res = await updateItem(data);
+      const res = await update({ route: "items", data });
       return res;
     } catch (error) {
       console.error(error);
@@ -75,7 +76,7 @@ const UpdateItem = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      const res = await deleteItem(id);
+      const res = await deleteContent("items", id);
       console.log("res", res);
       if (!res || res.status !== 204) {
         console.log("Error deleting item");
@@ -99,7 +100,6 @@ const UpdateItem = () => {
           <ItemCard item={item} />
           <TextField name="itemName" label="Item Name" />
           <NumberField name="quantity" label="Quantity" />
-          {/* <Input type="hidden" name="id" defaultValue={item.id} /> */}
           <Button type="submit">Submit</Button>
         </form>
         <Dialog>

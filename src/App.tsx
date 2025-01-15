@@ -8,9 +8,9 @@ import {
 import AddItem from "./pages/AddItem";
 import Items from "./pages/Items";
 import UpdateItem from "./pages/UpdateItem";
-import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import { Toaster } from "./components/ui/toaster";
+import Home from "./pages/home";
 
 function App() {
   return (
