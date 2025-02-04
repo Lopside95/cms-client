@@ -60,3 +60,14 @@ export type FormInput = {
   type?: string;
   label: string;
 };
+export type Route = "items" | "animals" | "foods" | "shelters";
+
+export interface Create<T> {
+  route: Route;
+  data: T;
+}
+export interface Update<T> {
+  route: Route;
+  data: T;
+  id: number | undefined;
+}

@@ -16,7 +16,7 @@ const Navbar = () => {
       </Button>
       <Button
         variant={location.pathname === "/add-item" ? "outline" : "default"}
-        onClick={() => navigate("/add-item")}
+        onClick={() => navigate("/items/add")}
       >
         Add Item
       </Button>
@@ -26,6 +26,12 @@ const Navbar = () => {
         onClick={() => navigate("/items")}
       >
         All Items
+      </Button>
+      <Button
+        variant={location.pathname === "/shelters/add" ? "outline" : "default"}
+        onClick={() => navigate("/shelters/add")}
+      >
+        Add Shelter
       </Button>
     </div>
   );

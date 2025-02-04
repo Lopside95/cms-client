@@ -22,7 +22,8 @@ const Items = () => {
   const [items, setItems] = useState<Item[] | null>();
   const fetchData = async () => {
     const res = await getAll("items");
-
+    console.log("res", res);
+    console.log("res.data", res?.data);
     setItems(res?.data);
   };
 
@@ -32,10 +33,16 @@ const Items = () => {
     fetchData();
   }, []);
 
+  if (!items?.length) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <main className="">
       <h1>Items</h1>
-      <section className="flex flex-wrap">
+      <p>{items[0].itemName}</p>
+      <p>{items[0].quantity}</p>
+      {/* <section className="flex flex-wrap">
         {items?.map((item) => (
           <ItemCard
             onClick={() => navigate(`/items/${item.id}`)}
@@ -44,7 +51,7 @@ const Items = () => {
             inputData={{ name: "name", type: "text", label: "Name" }}
           />
         ))}
-      </section>
+      </section> */}
       <Button type="submit">Submit</Button>
     </main>
   );

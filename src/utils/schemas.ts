@@ -14,7 +14,6 @@ export const animalSchema = z.object({
   age: z.number(),
   chipNumber: z.string(),
   shelterId: z.number(),
-
   breed: z.string(),
 });
 
@@ -26,16 +25,14 @@ export const foodSchema = z.object({
 });
 
 export const shelterSchema = z.object({
-  id: z.number(),
   name: z.string(),
   location: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
   phone: z.string(),
   email: z.string(),
   longitude: z.number(),
   latitude: z.number(),
-  animals: z.array(animal),
+  capacity: z.number(),
+  animals: z.array(animal).optional(),
   foods: z.array(food),
 });
 

@@ -44,7 +44,6 @@ const AddItem = () => {
       const res = await create<ItemSchema>({
         route: "items",
         data,
-        id: data.id,
       });
 
       if (res?.status === 201) {
@@ -62,26 +61,6 @@ const AddItem = () => {
       console.error(error);
     }
   };
-
-  // const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
-  //   try {
-  //     const res = await create({ route: "items", data });
-
-  //     if (res?.status === 201) {
-  //       toast({
-  //         title: "Item successfully added to the inventory",
-  //         duration: 2000,
-  //       });
-  //       form.reset();
-
-  //       setTimeout(() => {
-  //         form.setFocus("itemName");
-  //       }, 1000);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   return (
     <FormProvider {...form}>
