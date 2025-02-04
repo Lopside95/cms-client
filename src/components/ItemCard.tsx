@@ -12,6 +12,7 @@ import TextField from "./TextField";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { ItemSchema, itemSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { formatDate } from "@/utils/helpers";
 
 interface ItemCardProps {
   item: Item;
@@ -20,13 +21,7 @@ interface ItemCardProps {
 }
 
 const ItemCard = ({ item, inputData, onClick }: ItemCardProps) => {
-  // const {control} = useFormContext();
-
-  const { itemName, quantity, id } = item;
-  const createdAt = new Date(item.createdAt);
-  const updatedAt = new Date(item.updatedAt);
-
-  // const { name, type, label }: FormInput = inputData;
+  const { itemName, quantity, id, createdAt, updatedAt } = item;
 
   return (
     <Card className="w-80" onClick={onClick}>
@@ -37,12 +32,9 @@ const ItemCard = ({ item, inputData, onClick }: ItemCardProps) => {
       <CardContent>
         <p>Amount:{quantity}</p>
       </CardContent>
-      <CardFooter className="flex flex-col gap-2">
-        <p>Last updated: {updatedAt.toLocaleDateString("en-GB")}</p>
-        <p>First added: {createdAt.toLocaleDateString("en-GB")}</p>
-        {/* <TextField name={name} label={label} /> */}
-        {/* <TextField name="name" label="Name" />
-        <NumberField name="quantity" label="Quantity" /> */}
+      <CardFooter className="flex items-start flex-col gap-2">
+        <p>{`Added: ${formatDate(createdAt)}`}</p>
+        <p>{`Last updated: ${formatDate(updatedAt)}`}</p>
       </CardFooter>
     </Card>
   );

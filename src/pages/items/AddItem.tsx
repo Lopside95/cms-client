@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { createItem, fetchItems, updateItem } from "@/utils/api";
-import { item, Item } from "@/utils/types";
+import { Item } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,12 +9,13 @@ import { Button } from "@/components/ui/button";
 import NumberField from "@/components/NumberField";
 import ItemCard from "@/components/ItemCard";
 import { useToast } from "@/hooks/use-toast";
+import { create, getAll } from "@/utils/api";
 
 const AddItem = () => {
   const [items, setItems] = useState<Item[] | null>(null);
 
   const fetchData = async () => {
-    const res = await fetchItems();
+    const res = await getAll("items");
     setItems(res?.data);
   };
 
@@ -41,7 +41,10 @@ const AddItem = () => {
 
   const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
     try {
-      const res = await createItem(data);
+      const res = await create<ItemSchema>({
+        route: "items",
+        data,
+      });
 
       if (res?.status === 201) {
         toast({

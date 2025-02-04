@@ -1,52 +1,51 @@
 import axios from "axios";
-import { ItemSchema } from "./schemas";
-import { Item } from "./types";
+import { Create, Route, Update } from "./types";
 
 export const baseUrl = import.meta.env.VITE_API_URL;
 
-const fetchItems = async () => {
+const getAll = async (route: string) => {
   try {
-    const res = await axios.get(`${baseUrl}/items`);
+    const res = await axios.get(`${baseUrl}/${route}`);
     return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-const fetchItemById = async (id: number) => {
+const getById = async (route: Route, id: number) => {
   try {
-    const res = await axios.get(`${baseUrl}/items/${id}`);
+    const res = await axios.get(`${baseUrl}/${route}/${id}`);
     return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-const createItem = async (data: ItemSchema) => {
+const create = async <T>({ route, data }: Create<T>) => {
   try {
-    const res = await axios.post(`${baseUrl}/items`, data);
+    const res = await axios.post(`${baseUrl}/${route}`, data);
     return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-const updateItem = async (data: ItemSchema) => {
+const update = async <T>({ route, data, id }: Update<T>) => {
   try {
-    const res = await axios.put(`${baseUrl}/items/${data.id}`, data);
+    const res = await axios.put(`${baseUrl}/${route}/${id}`, data);
     return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-const deleteItem = async (id: number) => {
+const deleteContent = async (route: Route, id: number) => {
   try {
-    const res = await axios.delete(`${baseUrl}/items/${id}`);
+    const res = await axios.delete(`${baseUrl}/${route}/${id}`);
     return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-export { fetchItems, createItem, updateItem, fetchItemById, deleteItem };
+export { getAll, getById, create, update, deleteContent };
