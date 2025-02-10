@@ -1,59 +1,87 @@
-import ItemCard from "@/components/ItemCard";
-import NumberField from "@/components/NumberField";
-import TextField from "@/components/TextField";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { getAll } from "@/utils/api";
 import { Item } from "@/utils/types";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { itemSchema, ItemSchema } from "@/utils/schemas";
+import TextField from "@/components/TextField";
+import { Button } from "@/components/ui/button";
+import NumberField from "@/components/NumberField";
+import ItemCard from "@/components/ItemCard";
+import { useToast } from "@/hooks/use-toast";
+import { add, getAll } from "@/utils/api";
 
 const Items = () => {
   const [items, setItems] = useState<Item[] | null>(null);
+
   const fetchData = async () => {
     const res = await getAll("items");
-    console.log("res", res);
-    console.log("res.data", res?.data);
     setItems(res?.data);
   };
 
-  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  const form = useForm<ItemSchema>({
+    resolver: zodResolver(itemSchema),
+    defaultValues: {
+      itemName: "",
+      quantity: 0,
+    },
+  });
+
+  const errors = form.formState.errors;
+
+  useEffect(() => {
+    console.log("form errors", errors);
+  }, [errors]);
+
+  const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
+    try {
+      const res = await add<ItemSchema>({
+        route: "items",
+        data,
+      });
+
+      console.log("res", res);
+
+      if (res?.status === 201) {
+        toast({
+          title: "Item successfully added to the inventory",
+          duration: 2000,
+        });
+        form.reset();
+
+        setTimeout(() => {
+          form.setFocus("itemName");
+        }, 1000);
+      }
+
+      return res;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <main className="">
-      <h1>Items</h1>
-      {items?.length && (
-        <>
-          <p>{items[0].itemName}</p>
-          <p>{items[0].quantity}</p>
-        </>
-      )}
-      {/* <section className="flex flex-wrap">
-        {items?.map((item) => (
-          <ItemCard
-            onClick={() => navigate(`/items/${item.id}`)}
-            key={item.id}
-            item={item}
-            inputData={{ name: "name", type: "text", label: "Name" }}
-          />
-        ))}
-      </section> */}
-      <Button type="submit">Submit</Button>
-    </main>
+    <FormProvider {...form}>
+      <main className="flex flex-col items-center align-middle ">
+        <h1>Items</h1>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-10 w-1/2"
+        >
+          <section>
+            <TextField name="itemName" label="Item Name" />
+            <NumberField name="quantity" label="Quantity" />
+          </section>
+          <Button type="submit">Add Item</Button>
+        </form>
+      </main>
+    </FormProvider>
   );
 };
 

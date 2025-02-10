@@ -32,7 +32,7 @@ const getByEmail = async (route: Route, email: string) => {
 
 const add = async <T>({ route, data }: Add<T>) => {
   try {
-    const res = await axios.post(`${baseUrl}/${route}/add`, data);
+    const res = await axios.post(`${baseUrl}/${route}`, data);
     return res;
   } catch (error) {
     console.error(error);

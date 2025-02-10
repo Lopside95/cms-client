@@ -14,28 +14,28 @@ const Navbar = () => {
       >
         Home
       </Button>
-      <Button
-        variant={location.pathname === "/add-item" ? "outline" : "default"}
-        onClick={() => navigate("/items/add")}
-      >
-        Add Item
-      </Button>
-      {/* <Button onClick={()=> navigate("item")} >Update Item</Button> */}
+      {/* <Button onClick={()=> navigate("item")}>Update Item</Button> */}
       <Button
         variant={location.pathname === "/items" ? "outline" : "default"}
         onClick={() => navigate("/items")}
       >
-        All Items
+        Items
       </Button>
       <Button
         variant={location.pathname === "/shelters/add" ? "outline" : "default"}
-        onClick={() => navigate("/shelters/add")}
+        onClick={() => navigate("/shelters")}
       >
         Add Shelter
       </Button>
       <Button
         variant={location.pathname === "/animals/add" ? "outline" : "default"}
-        onClick={() => navigate("/animals/add")}
+        onClick={() => navigate("/animals")}
+      >
+        Add Animal
+      </Button>
+      <Button
+        variant={location.pathname === "/foods" ? "outline" : "default"}
+        onClick={() => navigate("/foods")}
       >
         Add Animal
       </Button>

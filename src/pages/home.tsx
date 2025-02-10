@@ -21,8 +21,6 @@ const Home = () => {
   const handleShelter = async (email: string) => {
     const res = await getByEmail("shelters", email);
     console.log("res", res);
-    // setFetchedShelter(res?.data);
-    // console.log("fetchedShelter", fetchedShelter);
   };
 
   useEffect(() => {
