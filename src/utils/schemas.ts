@@ -9,12 +9,12 @@ export const itemSchema = z.object({
 
 export const animalSchema = z.object({
   id: z.number().optional(),
-  name: z.string(),
-  species: z.string(),
-  age: z.number(),
-  chipNumber: z.string(),
+  name: z.string().min(1, { message: "Name is required" }),
+  species: z.string().min(1, { message: "Species is required" }),
+  age: z.number().min(1, { message: "Age is required" }),
+  chipNumber: z.string().min(1, { message: "Chip number is required" }),
   shelterId: z.number().optional(),
-  breed: z.string(),
+  breed: z.string().min(1, { message: "Breed is required" }),
 });
 
 export const foodSchema = z.object({

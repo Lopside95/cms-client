@@ -7,6 +7,7 @@ import { Toaster } from "./components/ui/toaster";
 import Home from "./pages/home";
 import AddShelter from "./pages/shelters/AddShelter";
 import AddAnimal from "./pages/animals/AddAnimal";
+import AddFoods from "./pages/foods/AddFood";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/items/:id" element={<UpdateItem />} />
           <Route path="/shelters/add" element={<AddShelter />} />
           <Route path="/animals/add" element={<AddAnimal />} />
+          <Route path="/foods" element={<AddFoods />} />
         </Routes>
       </>
     </BrowserRouter>
