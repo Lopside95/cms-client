@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import NumberField from "@/components/NumberField";
 import ItemCard from "@/components/ItemCard";
 import { useToast } from "@/hooks/use-toast";
-import { create, getAll } from "@/utils/api";
+import { add, getAll } from "@/utils/api";
 
 const AddItem = () => {
   const [items, setItems] = useState<Item[] | null>(null);
@@ -41,10 +41,12 @@ const AddItem = () => {
 
   const onSubmit: SubmitHandler<ItemSchema> = async (data: ItemSchema) => {
     try {
-      const res = await create<ItemSchema>({
+      const res = await add<ItemSchema>({
         route: "items",
         data,
       });
+
+      console.log("res", res);
 
       if (res?.status === 201) {
         toast({
@@ -57,6 +59,8 @@ const AddItem = () => {
           form.setFocus("itemName");
         }, 1000);
       }
+
+      return res;
     } catch (error) {
       console.error(error);
     }

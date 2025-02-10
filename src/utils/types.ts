@@ -62,7 +62,7 @@ export type FormInput = {
 };
 export type Route = "items" | "animals" | "foods" | "shelters";
 
-export interface Create<T> {
+export interface Add<T> {
   route: Route;
   data: T;
 }

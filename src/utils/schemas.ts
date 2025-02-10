@@ -13,7 +13,7 @@ export const animalSchema = z.object({
   species: z.string(),
   age: z.number(),
   chipNumber: z.string(),
-  shelterId: z.number(),
+  shelterId: z.number().optional(),
   breed: z.string(),
 });
 
@@ -33,7 +33,7 @@ export const shelterSchema = z.object({
   latitude: z.number(),
   capacity: z.number(),
   animals: z.array(animal).optional(),
-  foods: z.array(food),
+  foods: z.array(food).optional(),
 });
 
 export type AnimalSchema = z.infer<typeof animalSchema>;

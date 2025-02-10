@@ -19,7 +19,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 const Items = () => {
-  const [items, setItems] = useState<Item[] | null>();
+  const [items, setItems] = useState<Item[] | null>(null);
   const fetchData = async () => {
     const res = await getAll("items");
     console.log("res", res);
@@ -33,15 +33,15 @@ const Items = () => {
     fetchData();
   }, []);
 
-  if (!items?.length) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <main className="">
       <h1>Items</h1>
-      <p>{items[0].itemName}</p>
-      <p>{items[0].quantity}</p>
+      {items?.length && (
+        <>
+          <p>{items[0].itemName}</p>
+          <p>{items[0].quantity}</p>
+        </>
+      )}
       {/* <section className="flex flex-wrap">
         {items?.map((item) => (
           <ItemCard

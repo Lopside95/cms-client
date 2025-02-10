@@ -3,15 +3,20 @@ import { Animal, Item, shelter } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { shelterSchema, ShelterSchema } from "@/utils/schemas";
+import {
+  animalSchema,
+  AnimalSchema,
+  shelterSchema,
+  ShelterSchema,
+} from "@/utils/schemas";
 import TextField from "@/components/TextField";
 import { Button } from "@/components/ui/button";
 import NumberField from "@/components/NumberField";
 import ItemCard from "@/components/ItemCard";
 import { useToast } from "@/hooks/use-toast";
-import { create, getAll } from "@/utils/api";
+import { add, getAll } from "@/utils/api";
 
-const AddShelter = () => {
+const AddAnimal = () => {
   const [animals, setAnimals] = useState<Animal[] | null>(null);
 
   const fetchData = async () => {
@@ -26,8 +31,8 @@ const AddShelter = () => {
     fetchData();
   }, []);
 
-  const form = useForm<ShelterSchema>({
-    resolver: zodResolver(shelterSchema),
+  const form = useForm<AnimalSchema>({
+    resolver: zodResolver(animalSchema),
     defaultValues: {
       // animals: [],
       // foods: [],
@@ -40,11 +45,9 @@ const AddShelter = () => {
     console.log("form errors", errors);
   }, [errors]);
 
-  const onSubmit: SubmitHandler<ShelterSchema> = async (
-    data: ShelterSchema
-  ) => {
+  const onSubmit: SubmitHandler<AnimalSchema> = async (data: AnimalSchema) => {
     try {
-      const res = await create<ShelterSchema>({
+      const res = await add<AnimalSchema>({
         route: "animals",
         data,
       });
@@ -74,13 +77,11 @@ const AddShelter = () => {
           className="flex flex-col gap-10 w-1/2"
         >
           <section>
-            <TextField name="name" label="Shelter Name" />
-            <NumberField name="capacity" label="Capacity" />
-            <TextField name="location" label="Location" />
-            <TextField name="phone" label="Phone" />
-            <TextField name="email" label="Email" />
-            <NumberField name="longitude" label="Longitude" />
-            <NumberField name="latitude" label="Latitude" />
+            <TextField name="name" label="Name" />
+            <NumberField name="age" label="Age" />
+            <TextField name="name" label="Species" />
+            <TextField name="name" label="Breed" />
+            <TextField name="chipNumber" label="Chip Number" />
           </section>
           <Button type="submit">Add Shelter</Button>
         </form>
@@ -89,4 +90,4 @@ const AddShelter = () => {
   );
 };
 
-export default AddShelter;
+export default AddAnimal;

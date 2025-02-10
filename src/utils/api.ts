@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Create, Route, Update } from "./types";
+import { Route, Update, Add } from "./types";
 
 export const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -21,7 +21,16 @@ const getById = async (route: Route, id: number) => {
   }
 };
 
-const create = async <T>({ route, data }: Create<T>) => {
+const getByEmail = async (route: Route, email: string) => {
+  try {
+    const res = await axios.get(`${baseUrl}/${route}/${email}`);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const add = async <T>({ route, data }: Add<T>) => {
   try {
     const res = await axios.post(`${baseUrl}/${route}`, data);
     return res;
@@ -48,4 +57,4 @@ const deleteContent = async (route: Route, id: number) => {
   }
 };
 
-export { getAll, getById, create, update, deleteContent };
+export { getAll, getById, add, update, deleteContent, getByEmail };

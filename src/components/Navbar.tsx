@@ -33,6 +33,12 @@ const Navbar = () => {
       >
         Add Shelter
       </Button>
+      <Button
+        variant={location.pathname === "/animals/add" ? "outline" : "default"}
+        onClick={() => navigate("/animals/add")}
+      >
+        Add Animal
+      </Button>
     </div>
   );
 };
